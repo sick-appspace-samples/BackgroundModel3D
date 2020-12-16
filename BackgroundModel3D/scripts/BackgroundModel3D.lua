@@ -50,8 +50,8 @@ local varThreshold = 2.5
 local bg = Image.BackgroundModel.createRunningGaussian(lineScanSensor, 1/(60*10))
 
 -- We use two viewer handles to be able to show proper overlays
-local v2d = View.create()
-local v3d = View.create("v3d")
+local v2d = View.create("viewer2D1")
+local v3d = View.create("viewer3D1")
 
 -- Create a decoration object for visualizing the height data.
 -- The provided data is not calibrated and the Ranger 3 sensor is 832 pixels high.
