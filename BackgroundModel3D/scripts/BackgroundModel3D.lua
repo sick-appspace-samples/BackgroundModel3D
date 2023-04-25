@@ -36,14 +36,15 @@ local v3d = View.create("viewer3D1")
 
 -- Create a decoration object for visualizing the height data.
 -- The provided data is not calibrated and the Ranger 3 sensor is 832 pixels high.
-local imagedecoration = View.ImageDecoration.create()
-imagedecoration:setRange(0, 832)
+local imagedecoration = View.ImageDecoration.create():setRange(0, 832)
 
 --End of Global Scope-----------------------------------------------------------
 
 --Start of Function and Event Scope---------------------------------------------
 
--- Helper function for showing the image results
+--- Helper function for showing the image results
+---@param refimage Image
+---@param objects Image.PixelRegion[]
 local function drawResults(refimage, objects)
 
   -- Clear viewers and add images
@@ -60,18 +61,13 @@ local function drawResults(refimage, objects)
       Shape.createLineSegment(Point.create(-10, 10), Point.create(10, -10))}
     
     -- Create a label decorator
-    local textdeco = View.TextDecoration.create()
-    textdeco:setColor(255, 255, 255)
-    textdeco:setSize(30)
+    local textdeco = View.TextDecoration.create():setColor(255, 255, 255):setSize(30)
     
     -- Visualize the bounding boxes and centroids
-    local shapedeco = View.ShapeDecoration.create()
-    shapedeco:setLineColor(180, 10, 10)
-    shapedeco:setLineWidth(11)
+    local shapedeco = View.ShapeDecoration.create():setLineColor(180, 10, 10):setLineWidth(11)
     
     -- Paint the image region
-    local regiondeco = View.PixelRegionDecoration.create()
-    regiondeco:setColor(0, 120, 220, 150)
+    local regiondeco = View.PixelRegionDecoration.create():setColor(0, 120, 220, 150)
     
     -- Draw each object individually
     for i, region in ipairs(objects) do
@@ -87,7 +83,8 @@ local function drawResults(refimage, objects)
       local cross2D = Shape.transform(cross, Transform.createTranslation2D(x, y))
       
       -- Get the height a quick and easy way
-      local z = Image.toWorldZ(refimage, refimage:getPixel(refimage:toPixelCoordinate(Point.create(x, y)):getXY()))
+        ---@diagnostic disable-next-line: missing-parameter
+        local z = Image.toWorldZ(refimage, refimage:getPixel(refimage:toPixelCoordinate(Point.create(x, y)):getXY()))
       
       -- Construct 3D versions for the 3D viewer
       local bbx3D = Shape.toShape3D(bbx2D, Transform.createTranslation3D(0,0,z))
@@ -115,7 +112,8 @@ local function drawResults(refimage, objects)
   v3d:present()
 end
 
--- Handle each captured image
+--- Handle each captured image
+---@param image Image
 local function callback(image)
 
   -- Results handles for the foreground and region to update
@@ -149,6 +147,7 @@ local function main()
   -- Use this simple function to keep the framerate
   -- we could also have used a Timer object.
   local tic = DateTime.getTimestamp()
+  ---@param hz int
   local function pace(hz)
     local toc = DateTime.getTimestamp()
     local sleeptime = 1000/hz - (toc-tic)
