@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <manifest>
     <application name="BackgroundModel3D">
         <crown name="BackgroundModel3D">
@@ -6,11 +6,10 @@
         </crown>
         <meta key="author">AppSpace Sample</meta>
         <meta key="version">2.12.0</meta>
-        <meta key="licensed">false</meta>
         <meta key="priority">low</meta>
         <meta key="tags">TrispectorP,Ranger,SIM4000,Image,Algorithm,Filter,Analysis</meta>
         <meta key="read-protected">false</meta>
         <meta key="copy-protected">false</meta>
-        <entry path="scripts" default="BackgroundModel3D.lua"/>
+        <entry default="BackgroundModel3D.lua" path="scripts"/>
     </application>
 </manifest>
